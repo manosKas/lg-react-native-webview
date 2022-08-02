@@ -190,6 +190,9 @@ RCTAutoInsetsProtocol>
     
   }
 #endif // !TARGET_OS_OSX
+
+  [self initWebView];
+
   return self;
 }
 
