@@ -1106,6 +1106,18 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
         new TopLoadingErrorEvent(webView.getId(), eventData));
     }
 
+    @Override
+    public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+        if(!request.isForMainFrame() && request.getUrl().getPath().endsWith("/favicon.ico")) {
+            try {
+                return new WebResourceResponse("image/png", null, null);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onReceivedHttpError(
