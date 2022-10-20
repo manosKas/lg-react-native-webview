@@ -1108,12 +1108,12 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
 
     @Override
     public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-        if(!request.isForMainFrame() && request.getUrl().getPath().endsWith("/favicon.ico")) {
-            try {
+        try {
+            if(request.getUrl() != null && request.getUrl().getPath() != null && !request.isForMainFrame() && request.getUrl().getPath().endsWith("/favicon.ico")) {
                 return new WebResourceResponse("image/png", null, null);
-            } catch (Exception e) {
-                e.printStackTrace();
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return null;
     }
