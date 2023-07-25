@@ -243,6 +243,18 @@ public class RNCWebViewClient extends WebViewClient {
         int reactTag = webView.getId();
         UIManagerHelper.getEventDispatcherForReactTag((ReactContext) webView.getContext(), reactTag).dispatchEvent(new TopLoadingErrorEvent(webView.getId(), eventData));
     }
+    
+    @Override
+    public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+        try {
+            if(request.getUrl() != null && request.getUrl().getPath() != null && !request.isForMainFrame() && request.getUrl().getPath().endsWith("/favicon.ico")) {
+                return new WebResourceResponse("image/png", null, null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
